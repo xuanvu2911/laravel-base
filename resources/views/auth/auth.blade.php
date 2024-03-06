@@ -13,7 +13,7 @@
     <meta name="description" content="" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/backend/assets/img/favicon/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="/backend/assets/img/favicon/favicon.png" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -42,6 +42,7 @@
     <!-- Page CSS -->
     <!-- Page -->
     <link rel="stylesheet" href="/backend/assets/vendor/css/pages/page-auth.css" />
+
 
     <!-- Helpers -->
     <script src="/backend/assets/vendor/js/helpers.js"></script>
@@ -101,7 +102,7 @@
     <script src="/backend/assets/js/main.js"></script>
 
     <!-- Page JS -->
-    <script src="/backend/assets/js/pages-auth.js"></script>
+    {{-- <script src="/backend/assets/js/pages-auth.js"></script> --}}
 
     @stack('scripts')
 
