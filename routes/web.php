@@ -16,7 +16,7 @@ use App\Http\Controllers\Admin\DashboardController;
 */
 
 Route::get('/', function () {
-    return 'front-end';
+    return redirect(route('admin.'));
 });
 
 Auth::routes();

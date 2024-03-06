@@ -52,7 +52,7 @@
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="/backend/assets/js/config.js"></script>
 
-    @stack('stylesheets')
+    @yield('css')
 
 </head>
 
@@ -104,7 +104,7 @@
     <!-- Page JS -->
     {{-- <script src="/backend/assets/js/pages-auth.js"></script> --}}
 
-    @stack('scripts')
+    @yield('js')
 
 </body>
 
