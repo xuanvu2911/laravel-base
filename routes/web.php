@@ -23,6 +23,10 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::get('/login', function () {
+    return view('auth.login');
+})->name('login');
+
 Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 
     Route::get('/', [DashboardController::class, 'index']);

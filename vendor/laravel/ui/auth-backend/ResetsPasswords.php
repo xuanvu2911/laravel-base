@@ -26,7 +26,6 @@ trait ResetsPasswords
      */
     public function showResetForm(Request $request)
     {
-
         $token = $request->route()->parameter('token');
 
         return view('auth.passwords.reset')->with(
@@ -57,9 +56,26 @@ trait ResetsPasswords
         // If the password was successfully reset, we will redirect the user back to
         // the application's home authenticated view. If there is an error we can
         // redirect them back to where they came from with their error message.
-        return $response == Password::PASSWORD_RESET
-            ? $this->sendResetResponse($request, $response)
-            : $this->sendResetFailedResponse($request, $response);
+        // if ($response = $this->registered($request, $user)) {
+        //     return $response;
+        // }
+
+        // return $request->wantsJson()
+        //             ? new JsonResponse([], 201)
+        //             : redirect($this->redirectPath());
+
+        // dd($response);
+
+        // return $response == Password::PASSWORD_RESET
+        //     ? $this->sendResetResponse($request, $response)
+        //     : $this->sendResetFailedResponse($request, $response);
+        if ($response == Password::PASSWORD_RESET) {
+            return redirect()->route('login')
+                ->with('status', trans($response));
+        } else {
+            return redirect()->back()
+                ->with('status', trans($response));
+        }
     }
 
     /**
@@ -114,12 +130,10 @@ trait ResetsPasswords
         $this->setUserPassword($user, $password);
 
         $user->setRememberToken(Str::random(60));
-
         $user->save();
-
         event(new PasswordReset($user));
 
-        $this->guard()->login($user);
+        // $this->guard()->login($user);
     }
 
     /**

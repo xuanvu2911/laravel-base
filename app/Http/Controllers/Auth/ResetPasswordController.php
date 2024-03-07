@@ -26,5 +26,24 @@ class ResetPasswordController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::ADMIN;
+    protected $redirectTo = '/login';
+
+    protected function validationErrorMessages()
+    {
+        return [
+            'password.required' => 'Mật khẩu mới không được để trống',
+            'password.string' => 'Mật khẩu phải là ký tự',
+            'password.min' => 'Mật khẩu phải có ít nhất :min ký tự',
+            'password_confirmation.required' => 'Mật khẩu xác nhận không được để trống',
+            'password_confirmation.same' => 'Mật khẩu xác nhận không khớp',
+        ];
+    }
+
+    protected function rules()
+    {
+        return [
+            'password' => ['required', 'string', 'min:6'],
+            'password_confirmation' => ['required', 'same:password'],
+        ];
+    }
 }
