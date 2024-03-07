@@ -14,11 +14,11 @@ return [
     */
 
     //'reset' => 'Your password has been reset.',
-    'reset' => 'Mật khẩu của bạn được được đặt lại.<br>Sử dụng mật khẩu mới để đăng nhập vào hệ thống.',
+    'reset' => 'Mật khẩu của bạn được được đặt lại. Hãy sử dụng mật khẩu mới để đăng nhập vào hệ thống.',
     'sent' => 'We have emailed your password reset link.',
     'throttled' => 'Please wait before retrying.',
     //'token' => 'This password reset token is invalid.',
-    'token' => 'Đường dẫn thiết lập lại mật khẩu không hợp lệ.<br>Vui lòng vào chức năng "quên mật khẩu" để lấy đường dẫn mới.',
+    'token' => 'Đường dẫn thiết lập lại mật khẩu không hợp lệ. Vui lòng vào chức năng "quên mật khẩu" để lấy đường dẫn mới.',
     'user' => "We can't find a user with that email address.",
 
 ];
