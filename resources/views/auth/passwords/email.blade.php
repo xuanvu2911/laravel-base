@@ -1,47 +1,70 @@
-@extends('layouts.app')
+@extends('auth.auth')
+
+@section('css')
+<link rel="stylesheet" href="/backend/assets/vendor/libs/spinkit/spinkit.css" />
+@endsection
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+<!-- Forgot Password -->
+<div class="d-flex col-12 col-lg-5 col-xl-4 align-items-center authentication-bg p-sm-5 p-4">
+    <div class="w-px-400 mx-auto">
+        <!-- Logo -->
+        <div class="app-brand mb-5">
+            <a href="{{ route('login') }}" class="app-brand-link gap-2">
+                <span class="app-brand-logo demo">
+                    <img src="/backend/assets/img/logos/default-logo.png" class="img-fluid" alt="Logo image" />
+                </span>
+                <span class="app-brand-text demo text-body fw-bold">Laravel Base</span>
+            </a>
+        </div>
+        <!-- /Logo -->
+        <h4 class="mb-2">Bạn quên mật khẩu? 🔒</h4>
+        <p class="mb-4">Hãy nhập email của bạn và nhấn vào nút bên dưới để nhận email tạo lại mật khẩu.</p>
 
-                    <form method="POST" action="{{ route('password.email') }}">
-                        @csrf
+        @if (session('status'))
+        <div class="alert alert-success" role="alert">
+            {{ session('status') }}
+        </div>
+        @endif
 
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Send Password Reset Link') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+        <form method="POST" action="{{ route('password.email') }}" class="mb-3" id="forgotPassword">
+            @csrf
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="text" class="form-control" id="email" name="email" value="{{ old('email') }}"
+                    placeholder="Nhập email của bạn..." autofocus />
+                @error('email')
+                <span class="show-error">
+                    {{ $message }}
+                </span>
+                @enderror
             </div>
+            <button type="submit" class="btn btn-primary d-grid w-100" id="submitBtn">Nhận email tạo lại mật
+                khẩu</button>
+            <div class="mb-3" id="spinner" style="margin: auto; width: 10%;">
+            </div>
+        </form>
+        <div class="text-center">
+            <a href="{{ route('admin.') }}" class="d-flex align-items-center justify-content-center">
+                <i class="bx bx-chevron-left scaleX-n1-rtl bx-sm"></i>
+                <span>Quay lại trang đăng nhập</span>
+            </a>
         </div>
     </div>
 </div>
+<!-- /Forgot Password -->
+@endsection
+
+@section('js')
+<script>
+    //SHOW SPINNER WHEN SUBMIT FORM
+    $(document).ready(() => {
+        $('#forgotPassword').on('submit', function(e) {
+            var spinner = '<div class="sk-wave sk-primary"> <div class = "sk-wave-rect"> </div> <div class = "sk-wave-rect"> </div> <div class = "sk-wave-rect"> </div> <div class = "sk-wave-rect"> </div> <div class = "sk-wave-rect"> </div> </div>'
+            $("#submitBtn").remove();
+            $("#spinner").append(spinner);
+        });
+    });
+</script>
 @endsection

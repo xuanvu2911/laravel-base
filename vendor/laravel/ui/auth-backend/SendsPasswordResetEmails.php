@@ -27,6 +27,8 @@ trait SendsPasswordResetEmails
      */
     public function sendResetLinkEmail(Request $request)
     {
+
+        //dd($request);
         $this->validateEmail($request);
 
         // We will send the password reset link to this user. Once we have attempted
@@ -37,8 +39,8 @@ trait SendsPasswordResetEmails
         );
 
         return $response == Password::RESET_LINK_SENT
-                    ? $this->sendResetLinkResponse($request, $response)
-                    : $this->sendResetLinkFailedResponse($request, $response);
+            ? $this->sendResetLinkResponse($request, $response)
+            : $this->sendResetLinkFailedResponse($request, $response);
     }
 
     /**
@@ -73,8 +75,8 @@ trait SendsPasswordResetEmails
     protected function sendResetLinkResponse(Request $request, $response)
     {
         return $request->wantsJson()
-                    ? new JsonResponse(['message' => trans($response)], 200)
-                    : back()->with('status', trans($response));
+            ? new JsonResponse(['message' => trans($response)], 200)
+            : back()->with('status', trans($response));
     }
 
     /**
@@ -95,8 +97,8 @@ trait SendsPasswordResetEmails
         }
 
         return back()
-                ->withInput($request->only('email'))
-                ->withErrors(['email' => trans($response)]);
+            ->withInput($request->only('email'))
+            ->withErrors(['email' => trans($response)]);
     }
 
     /**

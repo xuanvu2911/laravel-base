@@ -72,6 +72,8 @@ class RegisterController extends Controller
             ],
             [
                 'name' => 'Họ và Tên',
+                'username' => 'Username',
+                'email' => 'Email',
                 'password' => 'Mật khẩu',
                 'password_confirmation' => 'Mật khẩu xác nhận',
             ]
