@@ -28,7 +28,7 @@ Route::get('/login', function () {
     return view('auth.login');
 })->name('login');
 
-Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/', [DashboardController::class, 'index']);
 });
