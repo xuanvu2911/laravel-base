@@ -51,10 +51,7 @@
                 </div>
             </div>
 
-            <div class="mb-3 form-password-toggle"">
-
-
-                    <div class=" mb-3 form-password-toggle">
+            <div class=" mb-3 form-password-toggle">
                 <div class="d-flex justify-content-between">
                     <div class=" form-check">
                         {{-- <input class="form-check-input" type="checkbox" name="remember" id="remember-me" {{
@@ -70,35 +67,32 @@
 
                 </div>
             </div>
+            <button type="submit" class="btn btn-primary d-grid w-100">Đăng nhập</button>
+        </form>
 
+        <p class="text-center">
+            <span>Bạn chưa có tài khoản?</span>
+            <a href="{{ route('register') }}"><span>Đăng ký tài khoản</span></a>
+        </p>
 
+        <div class="divider my-4">
+            <div class="divider-text">hoặc</div>
+        </div>
+
+        <div class="d-flex justify-content-center">
+            <a href="javascript:;" class="btn btn-icon btn-label-facebook me-3">
+                <i class="tf-icons bx bxl-facebook"></i>
+            </a>
+
+            <a href="javascript:;" class="btn btn-icon btn-label-google-plus me-3">
+                <i class="tf-icons bx bxl-google-plus"></i>
+            </a>
+
+            <a href="javascript:;" class="btn btn-icon btn-label-twitter">
+                <i class="tf-icons bx bxl-twitter"></i>
+            </a>
+        </div>
     </div>
-    <button type="submit" class="btn btn-primary d-grid w-100">Đăng nhập</button>
-    </form>
-
-    <p class="text-center">
-        <span>Bạn chưa có tài khoản?</span>
-        <a href="{{ route('register') }}"><span>Đăng ký tài khoản</span></a>
-    </p>
-
-    <div class="divider my-4">
-        <div class="divider-text">hoặc</div>
-    </div>
-
-    <div class="d-flex justify-content-center">
-        <a href="javascript:;" class="btn btn-icon btn-label-facebook me-3">
-            <i class="tf-icons bx bxl-facebook"></i>
-        </a>
-
-        <a href="javascript:;" class="btn btn-icon btn-label-google-plus me-3">
-            <i class="tf-icons bx bxl-google-plus"></i>
-        </a>
-
-        <a href="javascript:;" class="btn btn-icon btn-label-twitter">
-            <i class="tf-icons bx bxl-twitter"></i>
-        </a>
-    </div>
-</div>
 </div>
 <!-- /Login -->
 @endsection

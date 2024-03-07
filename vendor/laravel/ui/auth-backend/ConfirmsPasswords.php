@@ -32,8 +32,8 @@ trait ConfirmsPasswords
         $this->resetPasswordConfirmationTimeout($request);
 
         return $request->wantsJson()
-                    ? new JsonResponse([], 204)
-                    : redirect()->intended($this->redirectPath());
+            ? new JsonResponse([], 204)
+            : redirect()->intended($this->redirectPath());
     }
 
     /**
@@ -66,6 +66,9 @@ trait ConfirmsPasswords
      */
     protected function validationErrorMessages()
     {
-        return [];
+        return [
+            'password.required' => 'Mật khẩu không được đễ trống.',
+            'password.current_password' => 'Mật khẩu không đúng, vui lòng nhập lại.',
+        ];
     }
 }
