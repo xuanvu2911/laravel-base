@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin\DashboardController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Admin\AdminController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,7 +21,7 @@ use Illuminate\Http\Request;
 //     return redirect(route('login'));
 // });
 
-//Auth::routes();
+Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -32,13 +33,22 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     //Route::get('/', [DashboardController::class, 'index']);
 
-    Route::middleware(['guest'])->group(function () {
+    Route::middleware(['guest', 'PreventBackHistory'])->group(function () {
         Route::view('/login', 'admin.auth.login')->name('login');
+        Route::post('/login_handler', [AdminController::class, 'loginHandler'])->name('login_handler');
+        Route::view('/forgot-password', 'admin.auth.forgot-password')->name('forgot-password');
+        Route::post('/send-password-reset-link', [AdminController::class, 'sendPasswordResetLink'])->name('send-password-reset-link');
+        Route::get('/password/reset/{token}', [AdminController::class, 'resetPassword'])->name('reset-password');
     });
 
-    Route::middleware(['auth'])->group(function () {
-        Route::view('/home', 'admin.home')->name('home');
+
+
+    Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
+        Route::view('/home', 'admin.dashboard')->name('home');
+        Route::post('/logout_handler', [AdminController::class, 'logoutHandler'])->name('logout_handler');
     });
+
+    Route::get('/register', [AdminController::class, 'register'])->name('register');
 });
 
 //notice to the new register or didn't verify.

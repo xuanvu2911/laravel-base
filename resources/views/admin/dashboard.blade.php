@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('pageTitle', $pageTitle)
+@section('pageTitle',isset($pageTitle)? $pageTitle:'Trang tổng quan')
 @section('content')
 Dashboard
 

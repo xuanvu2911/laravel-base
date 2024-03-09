@@ -1,6 +1,6 @@
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
     <div class="app-brand demo">
-        <a href="{{ route('admin.') }}" class="app-brand-link">
+        <a href="{{ route('admin.home') }}" class="app-brand-link">
             <span class="app-brand-logo demo">
                 <img src="backend/assets/img/logos/default-logo.png" class="img-fluid" alt="Logo image" />
             </span>

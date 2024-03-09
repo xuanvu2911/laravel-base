@@ -242,13 +242,12 @@
                         <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="{{ route('logout') }}"
-                            onclick="event.preventDefault();
-                        document.getElementById('logout-form').submit();"
-                            target="_blank">
+                        <a class="dropdown-item" href="{{ route('admin.logout_handler') }}" onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit();" target="_blank">
                             <i class="bx bx-power-off me-2"></i>
                             <span class="align-middle">Đăng xuất</span>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            <form id="logout-form" action="{{ route('admin.logout_handler') }}" method="POST"
+                                class="d-none">
                                 @csrf
                             </form>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">

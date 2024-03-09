@@ -11,7 +11,7 @@
     <div class="w-px-400 mx-auto">
         <!-- Logo -->
         <div class="app-brand mb-5">
-            <a href="{{ route('login') }}" class="app-brand-link gap-2">
+            <a href="{{ route('admin.home') }}" class="app-brand-link gap-2">
                 <span class="app-brand-logo demo">
                     <img src="/backend/assets/img/logos/default-logo.png" class="img-fluid" alt="Logo image" />
                 </span>
@@ -22,13 +22,19 @@
         <h4 class="mb-2">Bạn quên mật khẩu? 🔒</h4>
         <p class="mb-4">Hãy nhập email của bạn và nhấn vào nút bên dưới để nhận email tạo lại mật khẩu.</p>
 
-        @if (session('status'))
-        <div class="alert alert-success" role="alert">
-            {{ session('status') }}
+        @if (session('fail'))
+        <div class="alert alert-danger" role="alert">
+            {{ session('fail') }}
         </div>
         @endif
 
-        <form method="POST" action="{{ route('password.email') }}" class="mb-3" id="forgotPassword">
+        @if (session('success'))
+        <div class="alert alert-success" role="alert">
+            {{ session('success') }}
+        </div>
+        @endif
+
+        <form method="POST" action="{{ route('admin.send-password-reset-link') }}" class="mb-3" id="forgotPassword">
             @csrf
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
@@ -46,7 +52,7 @@
             </div>
         </form>
         <div class="text-center">
-            <a href="{{ route('admin.') }}" class="d-flex align-items-center justify-content-center">
+            <a href="{{ route('admin.login') }}" class="d-flex align-items-center justify-content-center">
                 <i class="bx bx-chevron-left scaleX-n1-rtl bx-sm"></i>
                 <span>Quay lại trang đăng nhập</span>
             </a>

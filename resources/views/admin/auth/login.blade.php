@@ -6,7 +6,7 @@
     <div class="w-px-400 mx-auto">
         <!-- Logo -->
         <div class="app-brand mb-5">
-            <a href="{{ route('admin.login') }}" class="app-brand-link gap-2">
+            <a href="{{ route('admin.home') }}" class="app-brand-link gap-2">
                 <span class="app-brand-logo demo">
                     <img src="/backend/assets/img/logos/default-logo.png" class="img-fluid" alt="Logo image" />
                 </span>
@@ -16,12 +16,19 @@
         <!-- /Logo -->
         <h4 class="mb-2">Xin chào! 👋</h4>
         <p class="mb-4">Hãy đăng nhập để truy cập vào hệ thống</p>
-        @if (session('status'))
-        <div class="alert alert-success" role="alert">
-            {{ session('status') }}
+        @if (session('fail'))
+        <div class="alert alert-danger" role="alert">
+            {{ session('fail') }}
         </div>
         @endif
-        <form id="formAuthentication" method="POST" action="{{ route('admin.login') }}">
+
+        @if (session('success'))
+        <div class="alert alert-success" role="alert">
+            {{ session('success') }}
+        </div>
+        @endif
+
+        <form id="formAuthentication" method="POST" action="{{ route('admin.login_handler') }}">
             @csrf
             <div class="mb-3">
                 <label for="email" class="form-label">Email hoặc Username</label>
@@ -59,8 +66,8 @@
                         <label class="form-check-label" for="remember-me"> Remember Me </label> --}}
                     </div>
 
-                    @if (Route::has('password.request'))
-                    <a class="btn btn-link" href="{{ route('password.request') }}">
+                    @if (Route::has('admin.forgot-password'))
+                    <a class="btn btn-link" href="{{ route('admin.forgot-password') }}">
                         <small>Quên mật khẩu?</small>
                     </a>
                     @endif
@@ -72,7 +79,7 @@
 
         <p class="text-center">
             <span>Bạn chưa có tài khoản?</span>
-            {{-- <a href="{{ route('register') }}"><span>Đăng ký tài khoản</span></a> --}}
+            <a href="{{ route('admin.register') }}"><span>Đăng ký tài khoản</span></a>
         </p>
 
         <div class="divider my-4">
