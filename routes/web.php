@@ -17,7 +17,7 @@ use Illuminate\Http\Request;
 */
 
 Route::get('/', function () {
-    return redirect(route('admin.'));
+    return redirect(route('login'));
 });
 
 Auth::routes();

@@ -9,6 +9,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        return view('Admin.dashboard');
+        $pageTitle = "Trang tổng quan";
+        return view('Admin.dashboard', compact('pageTitle'));
     }
 }
