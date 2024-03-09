@@ -2,7 +2,7 @@
     <div class="app-brand demo">
         <a href="{{ route('admin.home') }}" class="app-brand-link">
             <span class="app-brand-logo demo">
-                <img src="backend/assets/img/logos/default-logo.png" class="img-fluid" alt="Logo image" />
+                <img src="/backend/assets/img/logos/default-logo.png" class="img-fluid" alt="Logo image" />
             </span>
             <span class="app-brand-text demo menu-text fw-bold ms-2"><small>Laravel Base</small></span>
         </a>

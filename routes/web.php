@@ -39,6 +39,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::view('/forgot-password', 'admin.auth.forgot-password')->name('forgot-password');
         Route::post('/send-password-reset-link', [AdminController::class, 'sendPasswordResetLink'])->name('send-password-reset-link');
         Route::get('/password/reset/{token}', [AdminController::class, 'resetPassword'])->name('reset-password');
+        Route::post('/reset-password-handler', [AdminController::class, 'resetPasswordHandler'])->name('reset-password-handler');
+        Route::view('/register', 'admin.auth.register')->name('register');
+        Route::post('/register-handler', [AdminController::class, 'registerHandler'])->name('register-handler');
     });
 
 
@@ -48,7 +51,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/logout_handler', [AdminController::class, 'logoutHandler'])->name('logout_handler');
     });
 
-    Route::get('/register', [AdminController::class, 'register'])->name('register');
+    // Route::get('/register', [AdminController::class, 'register'])->name('register');
 });
 
 //notice to the new register or didn't verify.

@@ -8,7 +8,7 @@
             <div class="app-brand mb-5">
                 <a href="{{ route('login') }}" class="app-brand-link gap-2">
                     <span class="app-brand-logo demo">
-                        <img src="backend/assets/img/logos/default-logo.png" class="img-fluid" alt="Logo image" />
+                        <img src="/backend/assets/img/logos/default-logo.png" class="img-fluid" alt="Logo image" />
                     </span>
                     <span class="app-brand-text demo text-body fw-bold">Laravel Base</span>
                 </a>
@@ -22,7 +22,7 @@
                 </div>
             @endif
 
-            <form id="registerForm" method="POST" class="mb-3" action="{{ route('register') }}">
+            <form id="registerForm" method="POST" class="mb-3" action="{{ route('admin.register-handler') }}">
                 @csrf
 
                 <div class="mb-3">
@@ -116,7 +116,7 @@
 
             <p class="text-center">
                 <span>Nếu đã có tài khoản?</span>
-                <a href="{{ route('admin.') }}">
+                <a href="{{ route('admin.login') }}">
                     <span>Vào trang đăng nhập</span>
                 </a>
             </p>
