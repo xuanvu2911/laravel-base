@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
-<html lang="en" class="light-style layout-navbar-fixed layout-menu-fixed layout-compact" dir="ltr"
-    data-theme="theme-semi-dark" data-assets-path="/backend/assets/" data-template="vertical-menu-template">
+<html lang="en" class="light-style layout-wide customizer-hide" dir="ltr" data-theme="theme-default"
+    data-assets-path="/backend/assets/" data-template="vertical-menu-template">
 
 <head>
     <meta charset="utf-8" />
@@ -36,10 +36,13 @@
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="/backend/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
     <link rel="stylesheet" href="/backend/assets/vendor/libs/typeahead-js/typeahead.css" />
-    <link rel="stylesheet" href="/backend/assets/vendor/libs/apex-charts/apex-charts.css" />
+    <!-- Vendor -->
+    <link rel="stylesheet" href="/backend/assets/vendor/libs/@form-validation/umd/styles/index.min.css" />
 
     <!-- Page CSS -->
-    <link rel="stylesheet" href="/backend/assets/vendor/css/pages/card-analytics.css" />
+    <!-- Page -->
+    <link rel="stylesheet" href="/backend/assets/vendor/css/pages/page-auth.css" />
+
 
     <!-- Helpers -->
     <script src="/backend/assets/vendor/js/helpers.js"></script>
@@ -49,73 +52,32 @@
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="/backend/assets/js/config.js"></script>
 
-    <style>
-        .swal2-popup {
-            font-size: .87em;
-        }
-
-        #template-customizer .template-customizer-open-btn {
-            display: none !important;
-        }
-
-        .span-error {
-            width: 100%;
-            margin-top: 0.3rem;
-            font-size: 85%;
-            color: var(--bs-form-invalid-color);
-        }
-
-        .menu-inner .bx {
-            flex-grow: 0;
-            flex-shrink: 0;
-            margin-right: 0.5rem;
-            font-size: 1.25rem;
-        }
-    </style>
-
-    @stack('stylesheets')
+    @yield('css')
 
 </head>
 
 <body>
-    <!-- Layout wrapper -->
-    <div class="layout-wrapper layout-content-navbar">
-        <div class="layout-container">
-            <!-- Menu -->
-            @include('layouts.includes.menu')
-            <!-- / Menu -->
+    <!-- Content -->
 
-            <!-- Layout container -->
-            <div class="layout-page">
-                <!-- Navbar -->
-                @include('layouts.includes.navbar')
-                <!-- / Navbar -->
-
-                <!-- Content wrapper -->
-                <div class="content-wrapper">
-
-                    <!-- Content -->
-                    @yield('content')
-                    <!-- / Content -->
-
-                    <!-- Footer -->
-                    @include('layouts.includes.footer')
-                    <!-- / Footer -->
-
-                    <div class="content-backdrop fade"></div>
+    <div class="authentication-wrapper authentication-cover">
+        <div class="authentication-inner row m-0">
+            <!-- /Left Text -->
+            <div class="d-none d-lg-flex col-lg-7 col-xl-8 align-items-center p-5">
+                <div class="w-100 d-flex justify-content-center">
+                    <img src="/backend/assets/img/illustrations/boy-with-rocket-light.png" class="img-fluid"
+                        alt="Login image" width="700" data-app-dark-img="illustrations/boy-with-rocket-dark.png"
+                        data-app-light-img="illustrations/boy-with-rocket-light.png" />
                 </div>
-                <!-- Content wrapper -->
             </div>
-            <!-- / Layout page -->
+            <!-- /Left Text -->
+
+            <!-- Login -->
+            @yield('content')
+            <!-- /Login -->
         </div>
-
-        <!-- Overlay -->
-        <div class="layout-overlay layout-menu-toggle"></div>
-
-        <!-- Drag Target Area To SlideIn Menu On Small Screens -->
-        <div class="drag-target"></div>
     </div>
-    <!-- / Layout wrapper -->
+
+    <!-- / Content -->
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
@@ -132,15 +94,17 @@
     <!-- endbuild -->
 
     <!-- Vendors JS -->
-    <script src="/backend/assets/vendor/libs/apex-charts/apexcharts.js"></script>
+    <script src="/backend/assets/vendor/libs/@form-validation/umd/bundle/popular.min.js"></script>
+    <script src="/backend/assets/vendor/libs/@form-validation/umd/plugin-bootstrap5/index.min.js"></script>
+    <script src="/backend/assets/vendor/libs/@form-validation/umd/plugin-auto-focus/index.min.js"></script>
 
     <!-- Main JS -->
     <script src="/backend/assets/js/main.js"></script>
 
     <!-- Page JS -->
-    <script src="/backend/assets/js/app-ecommerce-dashboard.js"></script>
+    {{-- <script src="/backend/assets/js/pages-auth.js"></script> --}}
 
-    @stack('scripts')
+    @yield('js')
 
 </body>
 

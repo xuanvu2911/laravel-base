@@ -16,21 +16,29 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/', function () {
-    return redirect(route('login'));
-});
+// Route::get('/', function () {
+//     return redirect(route('login'));
+// });
 
-Auth::routes();
+//Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/login', function () {
-    return view('auth.login');
-})->name('login');
+// Route::get('/login', function () {
+//     return view('auth.login');
+// })->name('login');
 
-Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified'])->group(function () {
+Route::prefix('admin')->name('admin.')->group(function () {
 
-    Route::get('/', [DashboardController::class, 'index']);
+    //Route::get('/', [DashboardController::class, 'index']);
+
+    Route::middleware(['guest'])->group(function () {
+        Route::view('/login', 'admin.auth.login')->name('login');
+    });
+
+    Route::middleware(['auth'])->group(function () {
+        Route::view('/home', 'admin.home')->name('home');
+    });
 });
 
 //notice to the new register or didn't verify.

@@ -38,6 +38,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
+        $this->middleware('PreventBackHistory');
         $this->middleware('guest')->except('logout');
     }
     protected function validateLogin(Request $request)
@@ -65,7 +66,7 @@ class LoginController extends Controller
         ]);
     }
 
-    //add username for login field 
+    //add username for login field
     protected function credentials(Request $request)
     {
         if (filter_var($request->login_id, FILTER_VALIDATE_EMAIL)) {
