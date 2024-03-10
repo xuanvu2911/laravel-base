@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
-use Illuminate\Support\Carbon;
+
+use Validator;
 use App\Models\User;
-use constDefaults;
+use Illuminate\Support\Str;
+use App\Libraries\ChromeLog;
+use App\Libraries\ChromePhp;
+use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -251,50 +254,41 @@ class AdminController extends Controller
 
     public function updatePersonalDetails(Request $request)
     {
-
-        $user_id = Auth::user()->id;
-        dd($request->ajax());
-        if ($request->ajax()) {
-            dd('afd');
-            // $this->validate([
-            //     'name' => [
-            //         'rules' => 'required',
-            //         'errors' => [
-            //             'required' => 'Tên không được để trống'
-            //         ]
-            //     ],
-            //     'username' => [
-            //         'rules' => 'required|min_length[4]|is_unique[users.username,id,' . $user_id . ']|check_vietnamese|check_blank',
-            //         'errors' => [
-            //             'required' => 'Tài khoản không được để trống',
-            //             'min_length' => 'Tài khoản phải có ít nhất 4 ký tự',
-            //             'is_unique' => 'Tài khoản đã có trên hệ thống!',
-            //             'check_vietnamese' => 'Tài khoản không được có dấu tiếng việt',
-            //             'check_blank' => 'Tài khoản không được có khoảng trắng',
-            //         ]
-            //     ]
-            // ]);
-
-            // if ($validation->run() == FALSE) {
-            //     $errors = $validation->getErrors();
-            //     return json_encode(['status' => 0, 'error' => $errors]);
-            // } else {
-            //     $user = new User();
-            //     $update = $user->where('id', $user_id)
-            //         ->set([
-            //             'name' => $request->getVar('name'),
-            //             'username' => $request->getVar('username'),
-            //             'bio' => $request->getVar('bio'),
-            //         ])->update();
+        // $user_id = Auth::user()->id;
+        // $check = $request->validate(
+        //     [
+        //         'name' => ['required', 'string', 'min:5'],
+        //         'username' => ['required', 'string', 'min:5', 'unique:users'],
+        //     ],
+        //     [
+        //         'required' => ':attribute không được để trống',
+        //         'string' => ':attribute phải là ký tự',
+        //         'min' => ':attribute phải có ít nhất :min ký tự',
+        //         'unique' => ':attribute đã được sử dụng trên hệ thống',
+        //     ],
+        //     [
+        //         'name' => 'Họ và Tên',
+        //         'username' => 'Username',
+        //     ]
+        // );
 
 
-            //     if ($update) {
-            //         $user_info = $user->find($user_id);
-            //         return json_encode(['status' => 1, 'user_info' => $user_info, 'msg' => 'Thông tin tài khoản đã được cập nhật']);
-            //     } else {
-            //         return json_encode(['status' => 0, 'msg' => 'Something went wrong.']);
-            //     }
-            // }
-        }
+        // $user = new User();
+        // $update = $user->where('id', $user_id)
+        //     ->set([
+        //         'name' => $request->getVar('name'),
+        //         'username' => $request->getVar('username'),
+        //         'bio' => $request->getVar('bio'),
+        //     ])->update();
+
+        // if ($update) {
+        //     $user_info = $user->find($user_id);
+        //     return json_encode(['status' => 1, 'user_info' => $user_info, 'msg' => 'Thông tin tài khoản đã được cập nhật']);
+        // } else {
+        //     return json_encode(['status' => 0, 'msg' => 'Something went wrong.']);
+        // }
+        ChromePhp::log('adfadsf');
+        ChromeLog::log('adfadsf');
+        return json_encode(['status' => 1, 'msg' => 'Thông tin tài khoản đã được cập nhật']);
     }
 }

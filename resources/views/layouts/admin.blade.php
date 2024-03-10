@@ -73,7 +73,7 @@
         }
     </style>
 
-    @stack('stylesheets')
+    @yield('css')
 
 </head>
 
@@ -148,7 +148,7 @@
             });
         }
     </script>
-    @stack('scripts')
+    @yield('js')
 
 </body>
 

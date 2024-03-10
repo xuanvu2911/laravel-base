@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Monolog\Attribute\AsMonologProcessor;
 
 class AppServiceProvider extends ServiceProvider
 {
