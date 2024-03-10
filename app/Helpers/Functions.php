@@ -2,6 +2,8 @@
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 /**Send email function using PHP Mailer Library */
 if (!function_exists('sendEmail')) {
@@ -32,6 +34,19 @@ if (!function_exists('sendEmail')) {
             return true;
         } else {
             return false;
+        }
+    }
+}
+
+
+if (!function_exists('get_user')) {
+    function get_user()
+    {
+        if (Auth::check()) {
+            $user = User::findOrFail(auth()->id());
+            return $user;
+        } else {
+            return null;
         }
     }
 }

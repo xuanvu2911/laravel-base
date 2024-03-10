@@ -46,4 +46,13 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function getPicture($value)
+    {
+        if ($value) {
+            return asset('/backend/assets/img/avatars/' . $value);
+        } else {
+            return asset('/backend/assets/img/avatars/default-avatar.png');
+        }
+    }
 }

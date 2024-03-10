@@ -239,4 +239,12 @@ class AdminController extends Controller
             return redirect()->route('admin.register');
         }
     }
+
+    public function profileView(Request $request){
+        if(Auth::guard('web') ->check()) {
+            $user = User::findOrFail(auth()->id());
+        }
+        $pageTitle = "Hồ Sơ cá nhân";
+        return view('admin.profile.profile',compact('user','pageTitle'));
+    }
 }
