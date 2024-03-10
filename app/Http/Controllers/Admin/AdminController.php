@@ -240,11 +240,61 @@ class AdminController extends Controller
         }
     }
 
-    public function profileView(Request $request){
-        if(Auth::guard('web') ->check()) {
+    public function profileView(Request $request)
+    {
+        if (Auth::guard('web')->check()) {
             $user = User::findOrFail(auth()->id());
         }
         $pageTitle = "Hồ Sơ cá nhân";
-        return view('admin.profile.profile',compact('user','pageTitle'));
+        return view('admin.profile.profile', compact('user', 'pageTitle'));
+    }
+
+    public function updatePersonalDetails(Request $request)
+    {
+
+        $user_id = Auth::user()->id;
+        dd($request->ajax());
+        if ($request->ajax()) {
+            dd('afd');
+            // $this->validate([
+            //     'name' => [
+            //         'rules' => 'required',
+            //         'errors' => [
+            //             'required' => 'Tên không được để trống'
+            //         ]
+            //     ],
+            //     'username' => [
+            //         'rules' => 'required|min_length[4]|is_unique[users.username,id,' . $user_id . ']|check_vietnamese|check_blank',
+            //         'errors' => [
+            //             'required' => 'Tài khoản không được để trống',
+            //             'min_length' => 'Tài khoản phải có ít nhất 4 ký tự',
+            //             'is_unique' => 'Tài khoản đã có trên hệ thống!',
+            //             'check_vietnamese' => 'Tài khoản không được có dấu tiếng việt',
+            //             'check_blank' => 'Tài khoản không được có khoảng trắng',
+            //         ]
+            //     ]
+            // ]);
+
+            // if ($validation->run() == FALSE) {
+            //     $errors = $validation->getErrors();
+            //     return json_encode(['status' => 0, 'error' => $errors]);
+            // } else {
+            //     $user = new User();
+            //     $update = $user->where('id', $user_id)
+            //         ->set([
+            //             'name' => $request->getVar('name'),
+            //             'username' => $request->getVar('username'),
+            //             'bio' => $request->getVar('bio'),
+            //         ])->update();
+
+
+            //     if ($update) {
+            //         $user_info = $user->find($user_id);
+            //         return json_encode(['status' => 1, 'user_info' => $user_info, 'msg' => 'Thông tin tài khoản đã được cập nhật']);
+            //     } else {
+            //         return json_encode(['status' => 0, 'msg' => 'Something went wrong.']);
+            //     }
+            // }
+        }
     }
 }

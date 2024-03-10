@@ -118,7 +118,7 @@
                             </div>
 
                             <div class="mt-2">
-                                <button type="submit" class="btn btn-primary me-2">Cập nhật</button>
+                                <button id="updateInfoBtn" class="btn btn-primary me-2">Cập nhật</button>
                             </div>
                             <input type="hidden">
                         </form>
@@ -159,7 +159,7 @@
                                 </div>
                             </div>
                             <div class="col-12 mt-1" id="parentSubmit">
-                                <button type="submit" id="submitBtn" class="btn btn-primary me-2">Lưu thay đổi</button>
+                                <button id="submitBtn" class="btn btn-primary me-2">Lưu thay đổi</button>
                             </div>
 
                             <input type="hidden">
@@ -178,12 +178,12 @@
 
 @section('js')
 
-{{-- <script>
-    $('#personal_details_from').on('submit', function(e) {
+<script>
+    $('#updateInfoBtn').on('click', function(e) {
+        alert('adfa');
         e.preventDefault();
         var form = this;
         var formdata = new FormData(form);
-        // console.log(form);
         $.ajax({
             url: $(form).attr('action'),
             method: $(form).attr('method'),
@@ -225,7 +225,7 @@
         setRatio: 1,
         allowedExtensions: ['jpg', 'jpeg', 'png'],
         processUrl: '<?= route('admin.update-profile-picture', get_user()->id) ?>',
-        //withCSRF: ['<?= csrf_token() ?>', '<?= csrf_hash() ?>'],
+        withCSRF: ['<?= csrf_token() ?>'],
         onSuccess: function(message, element, status) {
             if (status == 1) {
                 toastr.success(message);
@@ -238,7 +238,7 @@
         }
     });
 
-    //Change password
+    Change password
     $('#change_password_form').on('submit', function(e) {
         e.preventDefault();
         //CSRF Hash
@@ -310,5 +310,5 @@
             }
         });
     });
-</script> --}}
+</script>
 @endSection
