@@ -233,6 +233,7 @@
                     $.each(response.errors, function(prefix, val) {
                         $(form).find('span.' + prefix + '_error').text(val);
                     });
+                    $.unblockUI();
                 }
             }
         });
