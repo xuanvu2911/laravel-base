@@ -14,6 +14,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\File;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 class AdminController extends Controller
 {
@@ -283,5 +285,117 @@ class AdminController extends Controller
         } else {
             return json_encode(['status' => 0, 'msg' => 'Something went wrong.']);
         }
+    }
+
+    public function changePassword(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'current_password' => ['bail', 'required', 'string', 'min:6', 'current_password'],
+            'new_password' => ['required', 'string', 'min:6'],
+            'confirm_new_password' => ['required', 'same:new_password', 'string'],
+        ], [
+            'required' => ':attribute không được để trống',
+            'string' => ':attribute phải là ký tự',
+            'min' => ':attribute phải có ít nhất :min ký tự',
+            'same' => ':attribute không trùng khớp mật khẩu mới',
+            'current_password' => 'Mật khẩu hiện tại không chính xác'
+        ], [
+            'current_password' => 'Mật khẩu hiện tại',
+            'new_password' => 'Mật khẩu mới',
+            'confirm_new_password' => 'Xác nhận mật khẩu',
+        ]);
+
+        // ChromePhp::log($validator->errors());
+        if ($validator->fails()) {
+            return json_encode(['errors' => $validator->errors()->toArray()]);
+        }
+
+        $user_id = Auth::id();
+        $user = User::find($user_id);
+        $user->password =  Hash::make($request->new_password);
+        $user->save();
+
+        //Send Email notification to user(admin) email address
+        $data = array(
+            'user' => $user,
+            'password' => $request->new_password
+        );
+
+        $mail_body = view('email-templates.reset-password', $data)->render();
+
+        $mailConfig = array(
+            'mail_from_email' => env('MAIL_FROM_ADDRESS'),
+            'mail_from_name' => env('MAIL_FROM_NAME'),
+            'mail_recipient_email' => $user->email,
+            'mail_recipient_name' => $user->name,
+            'mail_subject' => '[Laravel-Base] Password Changed',
+            'mail_body' => $mail_body,
+        );
+        $result = sendEmail($mailConfig);
+        //$result = true;
+        if ($result) {
+            return json_encode(['status' => 1, 'user_info' => $user, 'msg' => 'Mật khẩu hiện tại đã được thay đổi']);
+        } else {
+            return json_encode(['status' => 0, 'msg' => 'Đã có lỗi xảy ra, vui lòng thử lại sau.']);
+        }
+    }
+
+    public function updateProfilePicture(Request $request)
+    {
+        $user_id = Auth::id();
+        $user = User::find($user_id);
+
+        $path = 'backend/assets/img/avatars/';
+        $file = $request->file('user_profile_file');
+        $old_picture = $user->picture;
+        $new_filename = 'UIMG_' . rand(2, 1000) . $user_id . time() . uniqid() . '.jpg';
+        $upload = $file->move(public_path($path), $new_filename);
+        if ($upload) {
+            if ($old_picture != null && File::exists(public_path($path . $old_picture))) {
+                File::delete(public_path($path . $old_picture));
+            }
+            $user->update(['picture' => $new_filename]);
+            return response()->json(['status' => 1, 'msg' => 'Hình ảnh đại diện của bạn đã được thay đổi thành công.']);
+        } else {
+            return response()->json(['status' => 0, 'msg' => 'Đã có lỗi xảy ra, vui lòng thử lại sau.']);
+        }
+
+
+
+
+
+
+
+        //         //update picture without resize vunx
+        //         if ($file->move($path, $new_filename)) {
+        //             if ($old_picture != null && file_exists($path . $old_picture)) {
+        //                 unlink($path . $old_picture);
+        //             }
+        //             $user->picture = $new_filename;
+        //             $user->save();
+        //             return json_encode(['status' => 1, 'msg' => 'Hình ảnh đại diện của bạn đã được thay đổi thành công.']);
+        //         } else {
+        //             echo json_encode(['status' => 0, 'msg' => 'Đã có lỗi xảy ra, vui lòng thử lại sau.']);
+        //         }
+
+        //Image manipulation - with resize vunx
+        /** vunx - to use this fuction need to config file PHP.ini in Xampp Control, by remove ";" before ";extension = gd */
+        // $upload_image = \Config\Services::image()
+        //     ->withFile($file)
+        //     ->resize(450, 450, true, 'height')
+        //     ->save($path . $new_filename);
+
+        // if ($upload_image) {
+        //     if ($old_picture != null && file_exists($path . $new_filename)) {
+        //         unlink($path . $old_picture);
+        //     }
+        //     $user->where('id', $user_info->id)
+        //         ->set(['picture' => $new_filename])
+        //         ->update();
+
+        //     echo json_encode(['status' => 1, 'msg' => 'Hình ảnh đại diện đã được thay đổi !']);
+        // } else {
+        //     echo json_encode(['status' => 0, 'msg' => 'Something went wrong']);
+        // }
     }
 }

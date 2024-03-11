@@ -37,6 +37,8 @@
     <link rel="stylesheet" href="/backend/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
     <link rel="stylesheet" href="/backend/assets/vendor/libs/typeahead-js/typeahead.css" />
     <link rel="stylesheet" href="/backend/assets/vendor/libs/apex-charts/apex-charts.css" />
+    <link rel="stylesheet" type="text/css" href="/backend/extra-assets/ijabo/ijabo.min.css" />
+    <link rel="stylesheet" type="text/css" href="/backend/extra-assets/ijaboCropTool/ijaboCropTool.min.css" />
 
     <!-- Page CSS -->
     <link rel="stylesheet" href="/backend/assets/vendor/css/pages/card-analytics.css" />
@@ -111,6 +113,10 @@
     <!-- Vendors JS -->
     <script src="/backend/assets/vendor/libs/apex-charts/apexcharts.js"></script>
     <script src="/backend/assets/vendor/libs/toastr/toastr.js"></script>
+    <script src="/backend/assets/vendor/libs/block-ui/block-ui.js"></script>
+    <script src="/backend/extra-assets/ijabo/ijabo.min.js"></script>
+    <script src="/backend/extra-assets/ijabo/jquery.ijaboViewer.min.js"></script>
+    <script src="/backend/extra-assets/ijaboCropTool/ijaboCropTool.min.js"></script>
 
     <!-- Main JS -->
     <script src="/backend/assets/js/main.js"></script>

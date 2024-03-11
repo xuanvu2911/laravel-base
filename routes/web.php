@@ -52,8 +52,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/logout_handler', [AdminController::class, 'logoutHandler'])->name('logout_handler');
         Route::get('/profile', [AdminController::class, 'profileView'])->name('profile');
         Route::post('/update-personal-details', [AdminController::class, 'updatePersonalDetails'])->name('update-personal-details');
-        Route::get('/change-password', [AdminController::class, 'changePassword'])->name('change-password');
-        Route::get('/update-profile-picture', [AdminController::class, 'updateProfilePicture'])->name('update-profile-picture');
+        Route::post('/change-password', [AdminController::class, 'changePassword'])->name('change-password');
+        Route::post('/update-profile-picture', [AdminController::class, 'updateProfilePicture'])->name('update-profile-picture');
 
 
 
