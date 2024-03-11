@@ -31,7 +31,7 @@
     <link rel="stylesheet" href="/backend/assets/vendor/css/rtl/core.css" class="template-customizer-core-css" />
     <link rel="stylesheet" href="/backend/assets/vendor/css/rtl/theme-default.css"
         class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="/backend/assets/css/demo.css" />
+    <link rel="stylesheet" href="/backend/assets/css/custom.css" />
 
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="/backend/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
@@ -40,6 +40,7 @@
 
     <!-- Page CSS -->
     <link rel="stylesheet" href="/backend/assets/vendor/css/pages/card-analytics.css" />
+    <link rel="stylesheet" href="/backend/assets/vendor/libs/toastr/toastr.css" />
 
     <!-- Helpers -->
     <script src="/backend/assets/vendor/js/helpers.js"></script>
@@ -48,30 +49,6 @@
     <script src="/backend/assets/vendor/js/template-customizer.js"></script>
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="/backend/assets/js/config.js"></script>
-
-    <style>
-        .swal2-popup {
-            font-size: .87em;
-        }
-
-        #template-customizer .template-customizer-open-btn {
-            display: none !important;
-        }
-
-        .span-error {
-            width: 100%;
-            margin-top: 0.3rem;
-            font-size: 85%;
-            color: var(--bs-form-invalid-color);
-        }
-
-        .menu-inner .bx {
-            flex-grow: 0;
-            flex-shrink: 0;
-            margin-right: 0.5rem;
-            font-size: 1.25rem;
-        }
-    </style>
 
     @yield('css')
 
@@ -133,6 +110,7 @@
 
     <!-- Vendors JS -->
     <script src="/backend/assets/vendor/libs/apex-charts/apexcharts.js"></script>
+    <script src="/backend/assets/vendor/libs/toastr/toastr.js"></script>
 
     <!-- Main JS -->
     <script src="/backend/assets/js/main.js"></script>

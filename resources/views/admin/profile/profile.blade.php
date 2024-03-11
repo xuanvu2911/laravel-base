@@ -1,25 +1,6 @@
 @extends('layouts.admin')
 @section('pageTitle',isset($pageTitle)? $pageTitle:'Hồ sơ cá nhân')
-@section('css')
-<style type="text/css">
-    .light-style #toast-container>.toast-success,
-    .light-style #toast-container>.toast-success .toast-message a,
-    .light-style #toast-container>.toast-success .toast-message label {
-        background-color: #7ccb73 !important;
-        color: #dde9d7 !important;
-    }
 
-    .form-control {
-        border: var(--bs-border-width) solid #93bae1 !important;
-    }
-
-    .input-group-text {
-
-        border: var(--bs-border-width) solid #93bae1 !important;
-
-    }
-</style>
-@endsection
 @section('content')
 
 <!-- Content -->
@@ -39,8 +20,8 @@
                                 width="110" />
 
                             <div class="user-info text-center">
-                                <h4 class="mb-2 ci-user-name">{{$user->name}}</h4>
-                                <span class="bg-label-secondary ci-user-username">{{$user->username}}</span>
+                                <h4 class="mb-2 show-name">{{$user->name}}</h4>
+                                <span class="bg-label-secondary show-username">{{$user->username}}</span>
                                 <h5 class="pb-2 border-bottom mb-4"></h5>
                                 <div class="button-wrapper">
                                     <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
@@ -98,23 +79,13 @@
                                         <label for="name" class="form-label">Họ và tên </label>
                                         <input class="form-control" type="text" id="name" name="name"
                                             value="{{get_user()->name}}" autofocus="">
-                                        <span class="text-danger error-text span-error name_error"></span>
+                                        <span class="show-error name_error"></span>
                                     </div>
                                     <div class="mb-3 col-md-6 fv-plugins-icon-container">
                                         <label for="username" class="form-label">Tài khoản đăng nhập</label>
                                         <input class="form-control" type="text" name="username" id="username"
                                             value="{{$user->username}}">
-                                        <span class="text-danger error-text span-error username_error"></span>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-
-                                    <div class="mb-3 col-md-12 fv-plugins-icon-container">
-                                        <label for="bio" class="form-label">Mô tả ngắn</label>
-                                        <textarea name="bio" id="" cols="30" rows="4" class="form-control"
-                                            placeholder="Nhập một số thông tin giới thiệu ngắn gọn về tài khoản...."><?= get_user()->bio ?></textarea>
-                                        <span class="text-danger error-text span-error bio_error"></span>
+                                        <span class="show-error username_error"></span>
                                     </div>
                                 </div>
 
@@ -206,39 +177,35 @@
         var url = $(form).attr('action');
         var method = $(form).attr('method');
 
-
         $.ajax({
             url: url,
-            method: $(form).attr('method'),
+            method:method,
             data: formdata,
             processData: false,
             dataType: 'json',
             contentType: false,
             beforeSend: function() {
-              //  toastr.remove();
-              //  $(form).find('span.error-text').text('');
+               toastr.remove();
+               $(form).find('span.show-error').text('');
             },
             success: function(response) {
-               console.log(response);
-               // ChromePhp::log('adfadsf');
-                // if ($.isEmptyObject(response.error)) {
-                //     if (response.status == 1) {
-                //         $('.ci-user-name').each(function() {
-                //             $(this).html(response.user_info.name);
-                //         });
-                //         $('.ci-user-username').each(function() {
-                //             $(this).html(response.user_info.username);
-                //         });
-
-                //        // toastr.success(response.msg);
-                //     } else {
-                //        // toastr.error(response.msg);
-                //     }
-                // } else {
-                //     $.each(response.error, function(prefix, val) {
-                //         $(form).find('span.' + prefix + '_error').text(val);
-                //     });
-                // }
+                if ($.isEmptyObject(response.errors)) {
+                    if (response.status == 1) {
+                        $('.show-name').each(function() {
+                            $(this).html(response.user_info.name);
+                        });
+                        $('.show-username').each(function() {
+                            $(this).html(response.user_info.username);
+                        });
+                       toastr.success(response.msg);
+                    } else {
+                       toastr.error(response.msg);
+                    }
+                } else {
+                    $.each(response.errors, function(prefix, val) {
+                        $(form).find('span.' + prefix + '_error').text(val);
+                    });
+                }
             }
         });
     });

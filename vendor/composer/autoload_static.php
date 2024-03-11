@@ -41,7 +41,7 @@ class ComposerStaticInit9c491b8531eec05ba41a11d9276a5749
         'cd6300adadbd4f8fd3c2a0a1b3efa58a' => __DIR__ . '/../..' . '/app/Helpers/Functions.php',
         '826f3da4001aa504d228ba58f15bad49' => __DIR__ . '/../..' . '/app/Helpers/Constants.php',
         'adb872081c2eb43e50f2bfd2d1982123' => __DIR__ . '/../..' . '/app/Libraries/ChromePhp.php',
-        'f5b20998c711e746ae9f4501c08fdbec' => __DIR__ . '/../..' . '/app/Libraries/ChromeLog.php',
+        '5e6cf243941f2c9f453dee9b38fe796b' => __DIR__ . '/../..' . '/app/Helpers/ChromePhp.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -575,6 +575,7 @@ class ComposerStaticInit9c491b8531eec05ba41a11d9276a5749
     public static $classMap = array (
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
+        'App\\Helpers\\ChromePhp' => __DIR__ . '/../..' . '/app/Helpers/ChromePhp.php',
         'App\\Http\\Controllers\\Admin\\AdminController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/AdminController.php',
         'App\\Http\\Controllers\\Admin\\DashboardController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/DashboardController.php',
         'App\\Http\\Controllers\\Auth\\ConfirmPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ConfirmPasswordController.php',

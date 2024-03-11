@@ -40,5 +40,5 @@ return array(
     'cd6300adadbd4f8fd3c2a0a1b3efa58a' => $baseDir . '/app/Helpers/Functions.php',
     '826f3da4001aa504d228ba58f15bad49' => $baseDir . '/app/Helpers/Constants.php',
     'adb872081c2eb43e50f2bfd2d1982123' => $baseDir . '/app/Libraries/ChromePhp.php',
-    'f5b20998c711e746ae9f4501c08fdbec' => $baseDir . '/app/Libraries/ChromeLog.php',
+    '5e6cf243941f2c9f453dee9b38fe796b' => $baseDir . '/app/Helpers/ChromePhp.php',
 );

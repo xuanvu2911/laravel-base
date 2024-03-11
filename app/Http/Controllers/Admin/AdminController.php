@@ -3,17 +3,17 @@
 namespace App\Http\Controllers\Admin;
 
 
-use Validator;
+
 use App\Models\User;
+use App\Helpers\ChromePhp;
 use Illuminate\Support\Str;
-use App\Libraries\ChromeLog;
-use App\Libraries\ChromePhp;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
@@ -254,41 +254,34 @@ class AdminController extends Controller
 
     public function updatePersonalDetails(Request $request)
     {
-        // $user_id = Auth::user()->id;
-        // $check = $request->validate(
-        //     [
-        //         'name' => ['required', 'string', 'min:5'],
-        //         'username' => ['required', 'string', 'min:5', 'unique:users'],
-        //     ],
-        //     [
-        //         'required' => ':attribute không được để trống',
-        //         'string' => ':attribute phải là ký tự',
-        //         'min' => ':attribute phải có ít nhất :min ký tự',
-        //         'unique' => ':attribute đã được sử dụng trên hệ thống',
-        //     ],
-        //     [
-        //         'name' => 'Họ và Tên',
-        //         'username' => 'Username',
-        //     ]
-        // );
 
+        $validator = Validator::make($request->all(), [
+            'name' => ['required', 'string', 'min:5'],
+            'username' => ['required', 'string', 'min:5'],
+        ], [
+            'required' => ':attribute không được để trống',
+            'string' => ':attribute phải là ký tự',
+            'min' => ':attribute phải có ít nhất :min ký tự',
+            'unique' => ':attribute đã được sử dụng trên hệ thống',
+        ], [
+            'name' => 'Họ và Tên',
+            'username' => 'Username',
+        ]);
 
-        // $user = new User();
-        // $update = $user->where('id', $user_id)
-        //     ->set([
-        //         'name' => $request->getVar('name'),
-        //         'username' => $request->getVar('username'),
-        //         'bio' => $request->getVar('bio'),
-        //     ])->update();
+        if ($validator->fails()) {
+            return json_encode(['errors' => $validator->errors()->toArray()]);
+        }
 
-        // if ($update) {
-        //     $user_info = $user->find($user_id);
-        //     return json_encode(['status' => 1, 'user_info' => $user_info, 'msg' => 'Thông tin tài khoản đã được cập nhật']);
-        // } else {
-        //     return json_encode(['status' => 0, 'msg' => 'Something went wrong.']);
-        // }
-        ChromePhp::log('adfadsf');
-        ChromeLog::log('adfadsf');
-        return json_encode(['status' => 1, 'msg' => 'Thông tin tài khoản đã được cập nhật']);
+        $user_id = Auth::id();
+        $user = User::find($user_id);
+        $user->name = $request->name;
+        $user->username = $request->username;
+        $update = $user->save();
+        if ($update) {
+            $user_info = User::find($user_id);
+            return json_encode(['status' => 1, 'user_info' => $user_info, 'msg' => 'Thông tin tài khoản đã được cập nhật']);
+        } else {
+            return json_encode(['status' => 0, 'msg' => 'Something went wrong.']);
+        }
     }
 }
