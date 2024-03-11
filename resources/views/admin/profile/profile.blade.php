@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('pageTitle',isset($pageTitle)? $pageTitle:'Hồ sơ cá nhân')
+@section('pageTitle', isset($pageTitle) ? $pageTitle : 'Hồ sơ cá nhân')
 
 @section('content')
 
@@ -15,13 +15,13 @@
                 <div class="card-body">
                     <div class="user-avatar-section">
                         <div class="d-flex align-items-center flex-column">
-                            <img src="{{ $user->picture == null ? ' /backend/assets/img/avatars/default-avatar.png' : ' /backend/assets/img/avatars/' . $user->picture }}"
-                                alt="user-avatar" class="img-fluid rounded my-4  show-avatar-photo" height="110"
+                            <img src="/backend/assets/img/avatars/{{ $user->picture ?? 'default-avatar.png' }}"
+                                alt="user-avatar" class="img-fluid rounded my-4 show-avatar-photo" height="110"
                                 width="110" />
 
                             <div class="user-info text-center">
-                                <h4 class="mb-2 show-name">{{$user->name}}</h4>
-                                <span class="bg-label-secondary show-username">{{$user->username}}</span>
+                                <h4 class="mb-2 show-name">{{ $user->name }}</h4>
+                                <span class="bg-label-secondary show-username">{{ $user->username }}</span>
                                 <h5 class="pb-2 border-bottom mb-4"></h5>
                                 <div class="button-wrapper">
                                     <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
@@ -68,20 +68,20 @@
                 <div class="tab-content">
                     <div class="tab-pane fade show active" id="navs-pills-justified-home" role="tabpanel">
                         <div class="card-body">
-                            <form action="<?= route('admin.update-personal-details'); ?>" method="POST"
+                            <form action="<?= route('admin.update-personal-details') ?>" method="POST"
                                 id="personal_details_from">
                                 @csrf
                                 <div class="row">
                                     <div class="mb-3 col-md-6">
                                         <label for="name" class="form-label">Họ và tên </label>
                                         <input class="form-control" type="text" id="name" name="name"
-                                            value="{{get_user()->name}}" autofocus="">
+                                            value="{{ get_user()->name }}" autofocus="">
                                         <span class="show-error name_error"></span>
                                     </div>
                                     <div class="mb-3 col-md-6">
                                         <label for="username" class="form-label">Tài khoản đăng nhập</label>
                                         <input class="form-control" type="text" name="username" id="username"
-                                            value="{{$user->username}}">
+                                            value="{{ $user->username }}">
                                         <span class="show-error username_error"></span>
                                     </div>
                                 </div>
@@ -151,114 +151,112 @@
 
 <script>
     $('#personal_details_from').on('submit', function(e) {
-        e.preventDefault();
-        var form = this;
-        var formdata = new FormData(form);
-        var url = $(form).attr('action');
-        var method = $(form).attr('method');
+            e.preventDefault();
+            var form = this;
+            var formdata = new FormData(form);
+            var url = $(form).attr('action');
+            var method = $(form).attr('method');
 
-        $.ajax({
-            url: url,
-            method:method,
-            data: formdata,
-            processData: false,
-            dataType: 'json',
-            contentType: false,
-            beforeSend: function() {
-               toastr.remove();
-               $(form).find('span.show-error').text('');
-            },
-            success: function(response) {
-                if ($.isEmptyObject(response.errors)) {
-                    if (response.status == 1) {
-                        $('.show-name').each(function() {
-                            $(this).html(response.user_info.name);
-                        });
-                        $('.show-username').each(function() {
-                            $(this).html(response.user_info.username);
-                        });
-                       toastr.success(response.msg);
+            $.ajax({
+                url: url,
+                method: method,
+                data: formdata,
+                processData: false,
+                dataType: 'json',
+                contentType: false,
+                beforeSend: function() {
+                    toastr.remove();
+                    $(form).find('span.show-error').text('');
+                },
+                success: function(response) {
+                    if ($.isEmptyObject(response.errors)) {
+                        if (response.status == 1) {
+                            $('.show-name').each(function() {
+                                $(this).html(response.user_info.name);
+                            });
+                            $('.show-username').each(function() {
+                                $(this).html(response.user_info.username);
+                            });
+                            toastr.success(response.msg);
+                        } else {
+                            toastr.error(response.msg);
+                        }
                     } else {
-                       toastr.error(response.msg);
+                        $.each(response.errors, function(prefix, val) {
+                            $(form).find('span.' + prefix + '_error').text(val);
+                        });
                     }
-                } else {
-                    $.each(response.errors, function(prefix, val) {
-                        $(form).find('span.' + prefix + '_error').text(val);
-                    });
                 }
+            });
+        });
+
+        $('#change_password_form').on('submit', function(e) {
+            e.preventDefault();
+            var form = this;
+            var formdata = new FormData(form);
+            var url = $(form).attr('action');
+            var method = $(form).attr('method');
+
+            $.ajax({
+                url: url,
+                method: method,
+                data: formdata,
+                processData: false,
+                dataType: 'json',
+                contentType: false,
+                beforeSend: function() {
+                    toastr.remove();
+                    $(form).find('span.show-error').text('');
+                    $.blockUI({
+                        message: '<div class="sk-wave mx-auto"><div class="sk-rect sk-wave-rect"></div> <div class="sk-rect sk-wave-rect"></div> <div class="sk-rect sk-wave-rect"></div> <div class="sk-rect sk-wave-rect"></div> <div class="sk-rect sk-wave-rect"></div></div>',
+                        timeout: 10000,
+                        css: {
+                            backgroundColor: 'transparent',
+                            border: '0'
+                        },
+                        overlayCSS: {
+                            opacity: 0.5
+                        }
+                    });
+                },
+                success: function(response) {
+                    if ($.isEmptyObject(response.errors)) {
+                        if (response.status == 1) {
+                            toastr.success(response.msg);
+                            $(form).find('input[type="password"]').val('');
+                            $.unblockUI();
+                        } else {
+                            $.unblockUI();
+                            toastr.error(response.msg);
+                        }
+                    } else {
+                        $.each(response.errors, function(prefix, val) {
+                            $(form).find('span.' + prefix + '_error').text(val);
+                        });
+                        $.unblockUI();
+                    }
+                }
+            });
+        });
+
+        $('#user_profile_file').ijaboCropTool({
+            preview: '.show-avatar-photo',
+            setRatio: 1,
+            allowedExtensions: ['jpg', 'jpeg', 'png'],
+            buttonsText: ['CROP', 'QUIT'],
+            buttonsColor: ['#30bf7d', '#ee5155', -15],
+            processUrl: '{{ route('admin.update-profile-picture') }}',
+            withCSRF: ['_token', '{{ csrf_token() }}'],
+            onSuccess: function(message, element, status) {
+                if (status == 1) {
+                    toastr.success(message);
+                } else {
+                    toastr.error(message);
+                }
+            },
+            onError: function(message, element, status) {
+                alert(message);
             }
         });
-    });
-
-    $('#change_password_form').on('submit', function(e) {
-        e.preventDefault();
-        var form = this;
-        var formdata = new FormData(form);
-        var url = $(form).attr('action');
-        var method = $(form).attr('method');
-
-        $.ajax({
-            url: url,
-            method:method,
-            data: formdata,
-            processData: false,
-            dataType: 'json',
-            contentType: false,
-            beforeSend: function() {
-               toastr.remove();
-               $(form).find('span.show-error').text('');
-                $.blockUI({
-                    message: '<div class="sk-wave mx-auto"><div class="sk-rect sk-wave-rect"></div> <div class="sk-rect sk-wave-rect"></div> <div class="sk-rect sk-wave-rect"></div> <div class="sk-rect sk-wave-rect"></div> <div class="sk-rect sk-wave-rect"></div></div>',
-                    timeout: 10000,
-                    css: {
-                        backgroundColor: 'transparent',
-                        border: '0'
-                    },
-                    overlayCSS: {
-                        opacity: 0.5
-                    }
-                });
-            },
-            success: function(response) {
-                if ($.isEmptyObject(response.errors)) {
-                    if (response.status == 1) {
-                        toastr.success(response.msg);
-                        $(form).find('input[type="password"]').val('');
-                        $.unblockUI();
-                    } else {
-                        $.unblockUI();
-                        toastr.error(response.msg);
-                    }
-                } else {
-                    $.each(response.errors, function(prefix, val) {
-                        $(form).find('span.' + prefix + '_error').text(val);
-                    });
-                    $.unblockUI();
-                }
-            }
-        });
-    });
-
-    $('#user_profile_file').ijaboCropTool({
-        preview : '.show-avatar-photo',
-        setRatio:1,
-        allowedExtensions: ['jpg', 'jpeg','png'],
-        buttonsText:['CROP','QUIT'],
-        buttonsColor:['#30bf7d','#ee5155', -15],
-        processUrl:'{{ route("admin.update-profile-picture") }}',
-        withCSRF:['_token','{{ csrf_token() }}'],
-        onSuccess:function(message, element, status){
-            if (status == 1) {
-                toastr.success(message);
-            } else {
-                toastr.error(message);
-            }
-        },
-        onError:function(message, element, status){
-            alert(message);
-        }
-    });
-
-
 </script>
 @endSection
