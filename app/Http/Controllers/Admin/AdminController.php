@@ -12,9 +12,10 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 class AdminController extends Controller
@@ -345,58 +346,33 @@ class AdminController extends Controller
         $user_id = Auth::id();
         $user = User::find($user_id);
 
-        $path = 'backend/assets/img/avatars/';
-        $file = $request->file('user_profile_file');
+        $thumbnailPath = public_path('backend/assets/img/avatars/thumbnail');
+        $image = $request->file('user_profile_file');
+        $extension = $image->extension();
+
         $old_picture = $user->picture;
-        $new_filename = 'UIMG_' . rand(2, 1000) . $user_id . time() . uniqid() . '.jpg';
-        $upload = $file->move(public_path($path), $new_filename);
-        if ($upload) {
-            if ($old_picture != null && File::exists(public_path($path . $old_picture))) {
-                File::delete(public_path($path . $old_picture));
-            }
-            $user->picture = $new_filename;
-            $user->save();
-            return response()->json(['status' => 1, 'msg' => 'Hình ảnh đại diện của bạn đã được thay đổi thành công.']);
-        } else {
-            return response()->json(['status' => 0, 'msg' => 'Đã có lỗi xảy ra, vui lòng thử lại sau.']);
+        $new_filename = 'UIMG_' . rand(2, 1000) . $user_id . time() . uniqid() . '.' . $extension;
+
+        $realPath = $image->getRealPath();
+        $imgFile = Image::make($realPath);
+
+        //Save image to thumbnail folder
+        $imgFile->resize(150, 150, function ($constraint) {
+            $constraint->aspectRatio();
+        })->save($thumbnailPath . '/' . $new_filename);
+
+        //Save image to Destination folder
+        $destinationPath = public_path('/backend/assets/img/avatars');
+        $imgFile->resize(450, 450, function ($constraint) {
+            $constraint->aspectRatio();
+        })->save($destinationPath . '/' . $new_filename);
+
+        if ($old_picture != null && File::exists(public_path($destinationPath . $old_picture))) {
+            File::delete(public_path($destinationPath . $old_picture));
+            File::delete(public_path($thumbnailPath . $old_picture));
         }
-
-
-
-
-
-
-
-        //         //update picture without resize vunx
-        //         if ($file->move($path, $new_filename)) {
-        //             if ($old_picture != null && file_exists($path . $old_picture)) {
-        //                 unlink($path . $old_picture);
-        //             }
-        //             $user->picture = $new_filename;
-        //             $user->save();
-        //             return json_encode(['status' => 1, 'msg' => 'Hình ảnh đại diện của bạn đã được thay đổi thành công.']);
-        //         } else {
-        //             echo json_encode(['status' => 0, 'msg' => 'Đã có lỗi xảy ra, vui lòng thử lại sau.']);
-        //         }
-
-        //Image manipulation - with resize vunx
-        /** vunx - to use this fuction need to config file PHP.ini in Xampp Control, by remove ";" before ";extension = gd */
-        // $upload_image = \Config\Services::image()
-        //     ->withFile($file)
-        //     ->resize(450, 450, true, 'height')
-        //     ->save($path . $new_filename);
-
-        // if ($upload_image) {
-        //     if ($old_picture != null && file_exists($path . $new_filename)) {
-        //         unlink($path . $old_picture);
-        //     }
-        //     $user->where('id', $user_info->id)
-        //         ->set(['picture' => $new_filename])
-        //         ->update();
-
-        //     echo json_encode(['status' => 1, 'msg' => 'Hình ảnh đại diện đã được thay đổi !']);
-        // } else {
-        //     echo json_encode(['status' => 0, 'msg' => 'Something went wrong']);
-        // }
+        $user->picture = $new_filename;
+        $user->save();
+        return response()->json(['status' => 1, 'msg' => 'Hình ảnh đại diện của bạn đã được thay đổi thành công.']);
     }
 }
