@@ -10,7 +10,7 @@
     <div class="w-px-400 mx-auto">
         <!-- Logo -->
         <div class="app-brand mb-5">
-            <a href="{{ route('login') }}" class="app-brand-link gap-2">
+            <a href="{{ route('admin.login') }}" class="app-brand-link gap-2">
                 <span class="app-brand-logo demo">
                     <img src="/backend/assets/img/logos/default-logo.png" class="img-fluid" alt="Logo image" />
                 </span>

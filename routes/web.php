@@ -1,11 +1,12 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Admin\DashboardController;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\Auth\ForgotPasswordController;
+use App\Http\Controllers\Admin\Auth\LoginController;
+use App\Http\Controllers\Admin\Auth\RegisterController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,46 +18,31 @@ use App\Http\Controllers\Admin\AdminController;
 |
 */
 
-// Route::get('/', function () {
-//     return redirect(route('login'));
-// });
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-// Route::get('/login', function () {
-//     return view('auth.login');
-// })->name('login');
-
 Route::prefix('admin')->name('admin.')->group(function () {
-
-    //Route::get('/', [DashboardController::class, 'index']);
-
     Route::middleware(['guest', 'PreventBackHistory'])->group(function () {
+        //Login
         Route::view('/login', 'admin.auth.login')->name('login');
-        Route::post('/login_handler', [AdminController::class, 'loginHandler'])->name('login_handler');
-        Route::view('/forgot-password', 'admin.auth.forgot-password')->name('forgot-password');
-        Route::post('/send-password-reset-link', [AdminController::class, 'sendPasswordResetLink'])->name('send_password_reset_link');
-        Route::get('/password/reset/{token}', [AdminController::class, 'resetPassword'])->name('reset-password');
-        Route::post('/reset-password-handler', [AdminController::class, 'resetPasswordHandler'])->name('reset_password_handler');
+        Route::post('/login_handler', [LoginController::class, 'loginHandler'])->name('login_handler');
+
+        //Forgot Password
+        Route::view('/forgot-password', 'admin.auth.forgot-password')->name('forgot_password');
+        Route::post('/send-password-reset-link', [ForgotPasswordController::class, 'sendPasswordResetLink'])->name('send_password_reset_link');
+        Route::get('/password/reset/{token}', [ForgotPasswordController::class, 'resetPassword'])->name('reset_password');
+        Route::post('/reset-password-handler', [ForgotPasswordController::class, 'resetPasswordHandler'])->name('reset_password_handler');
+
+        //Register
         Route::view('/register', 'admin.auth.register')->name('register');
-        Route::post('/register-handler', [AdminController::class, 'registerHandler'])->name('register_handler');
+        Route::post('/register-handler', [RegisterController::class, 'registerHandler'])->name('register_handler');
     });
-
-
 
     Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
         Route::view('/', 'admin.dashboard');
         Route::view('/home', 'admin.dashboard')->name('home');
-        Route::post('/logout_handler', [AdminController::class, 'logoutHandler'])->name('logout_handler');
+        Route::post('/logout_handler', [LoginController::class, 'logoutHandler'])->name('logout_handler');
         Route::get('/profile', [AdminController::class, 'profileView'])->name('profile');
         Route::post('/update-user-details', [AdminController::class, 'updatePersonalDetails'])->name('update_user_details');
         Route::post('/change-password', [AdminController::class, 'changePassword'])->name('change_password');
         Route::post('/update-profile-picture', [AdminController::class, 'updateProfilePicture'])->name('update_profile_picture');
-
-
-
     });
 
     // Route::get('/register', [AdminController::class, 'register'])->name('register');
