@@ -37,11 +37,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::view('/login', 'admin.auth.login')->name('login');
         Route::post('/login_handler', [AdminController::class, 'loginHandler'])->name('login_handler');
         Route::view('/forgot-password', 'admin.auth.forgot-password')->name('forgot-password');
-        Route::post('/send-password-reset-link', [AdminController::class, 'sendPasswordResetLink'])->name('send-password-reset-link');
+        Route::post('/send-password-reset-link', [AdminController::class, 'sendPasswordResetLink'])->name('send_password_reset_link');
         Route::get('/password/reset/{token}', [AdminController::class, 'resetPassword'])->name('reset-password');
-        Route::post('/reset-password-handler', [AdminController::class, 'resetPasswordHandler'])->name('reset-password-handler');
+        Route::post('/reset-password-handler', [AdminController::class, 'resetPasswordHandler'])->name('reset_password_handler');
         Route::view('/register', 'admin.auth.register')->name('register');
-        Route::post('/register-handler', [AdminController::class, 'registerHandler'])->name('register-handler');
+        Route::post('/register-handler', [AdminController::class, 'registerHandler'])->name('register_handler');
     });
 
 
@@ -51,9 +51,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::view('/home', 'admin.dashboard')->name('home');
         Route::post('/logout_handler', [AdminController::class, 'logoutHandler'])->name('logout_handler');
         Route::get('/profile', [AdminController::class, 'profileView'])->name('profile');
-        Route::post('/update-personal-details', [AdminController::class, 'updatePersonalDetails'])->name('update-personal-details');
-        Route::post('/change-password', [AdminController::class, 'changePassword'])->name('change-password');
-        Route::post('/update-profile-picture', [AdminController::class, 'updateProfilePicture'])->name('update-profile-picture');
+        Route::post('/update-user-details', [AdminController::class, 'updatePersonalDetails'])->name('update_user_details');
+        Route::post('/change-password', [AdminController::class, 'changePassword'])->name('change_password');
+        Route::post('/update-profile-picture', [AdminController::class, 'updateProfilePicture'])->name('update_profile_picture');
 
 
 

@@ -68,14 +68,14 @@
                 <div class="tab-content">
                     <div class="tab-pane fade show active" id="navs-pills-justified-home" role="tabpanel">
                         <div class="card-body">
-                            <form action="<?= route('admin.update-personal-details') ?>" method="POST"
+                            <form action="<?= route('admin.update_user_details') ?>" method="POST"
                                 id="personal_details_from">
                                 @csrf
                                 <div class="row">
                                     <div class="mb-3 col-md-6">
                                         <label for="name" class="form-label">Họ và tên </label>
                                         <input class="form-control" type="text" id="name" name="name"
-                                            value="{{ get_user()->name }}" autofocus="">
+                                            value="{{ $user->name }}" autofocus="">
                                         <span class="show-error name_error"></span>
                                     </div>
                                     <div class="mb-3 col-md-6">
@@ -94,7 +94,7 @@
                     </div>
                     <div class="tab-pane fade" id="navs-pills-justified-profile" role="tabpanel">
                         <div class="card-body">
-                            <form action="<?= route('admin.change-password') ?>" method="POST"
+                            <form action="<?= route('admin.change_password') ?>" method="POST"
                                 id="change_password_form">
                                 @csrf
                                 <div class="row">
@@ -245,7 +245,7 @@
             allowedExtensions: ['jpg', 'jpeg', 'png'],
             buttonsText: ['CROP', 'QUIT'],
             buttonsColor: ['#30bf7d', '#ee5155', -15],
-            processUrl: '{{ route('admin.update-profile-picture') }}',
+            processUrl: '{{ route('admin.update_profile_picture') }}',
             withCSRF: ['_token', '{{ csrf_token() }}'],
             onSuccess: function(message, element, status) {
                 if (status == 1) {

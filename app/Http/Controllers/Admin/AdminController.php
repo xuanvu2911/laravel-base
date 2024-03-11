@@ -108,13 +108,10 @@ class AdminController extends Controller
         //Create action link
         $actionLink = route('admin.reset-password', ['token' => $token, 'email' => $request->email]);
 
-
         //Create mail content
         $mail_body = view('email-templates.forgot-password', ['actionLink' => $actionLink, 'user' => $user])->render();
 
         $mailConfig = array(
-            'mail_from_email' => env('MAIL_FROM_ADDRESS'),
-            'mail_from_name' => env('MAIL_FROM_NAME'),
             'mail_recipient_email' => $user->email,
             'mail_recipient_name' => $user->name,
             'mail_subject' => '[Laravel-Base] Reset Password',
@@ -186,8 +183,6 @@ class AdminController extends Controller
             );
             $mail_body = view('email-templates.reset-password', $data)->render();
             $mailConfig = array(
-                'mail_from_email' => env('MAIL_FROM_ADDRESS'),
-                'mail_from_name' => env('MAIL_FROM_NAME'),
                 'mail_recipient_email' => $user->email,
                 'mail_recipient_name' => $user->name,
                 'mail_subject' => '[Laravel-Base] Password Changed',
@@ -211,9 +206,9 @@ class AdminController extends Controller
         $request->validate(
             [
                 'name' => ['required', 'string', 'min:5'],
-                'username' => ['required', 'string', 'min:5', 'unique:users', new Vietnamese, new Blank],
+                'username' => ['bail','required', 'string', 'min:5', 'unique:users', new Vietnamese, new Blank],
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-                'password' => ['required', 'string', 'min:6', new Vietnamese, new Blank],
+                'password' => ['bail','required', 'string', 'min:6', new Vietnamese, new Blank],
                 'password_confirmation' => ['required', 'same:password'],
             ],
             [
@@ -263,7 +258,7 @@ class AdminController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'string', 'min:5'],
-            'username' => ['required', 'string', 'min:5', new Vietnamese, new Blank],
+            'username' => ['bail','required', 'string', 'min:5', new Vietnamese, new Blank],
         ], [
             'required' => ':attribute không được để trống',
             'string' => ':attribute phải là ký tự',
@@ -328,8 +323,6 @@ class AdminController extends Controller
         $mail_body = view('email-templates.reset-password', $data)->render();
 
         $mailConfig = array(
-            'mail_from_email' => env('MAIL_FROM_ADDRESS'),
-            'mail_from_name' => env('MAIL_FROM_NAME'),
             'mail_recipient_email' => $user->email,
             'mail_recipient_name' => $user->name,
             'mail_subject' => '[Laravel-Base] Password Changed',

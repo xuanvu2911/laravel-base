@@ -34,7 +34,7 @@
         </div>
         @endif
 
-        <form method="POST" action="{{ route('admin.send-password-reset-link') }}" class="mb-3" id="forgotPassword">
+        <form method="POST" action="{{ route('admin.send_password_reset_link') }}" class="mb-3" id="forgotPassword">
             @csrf
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
