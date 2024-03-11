@@ -354,7 +354,8 @@ class AdminController extends Controller
             if ($old_picture != null && File::exists(public_path($path . $old_picture))) {
                 File::delete(public_path($path . $old_picture));
             }
-            $user->update(['picture' => $new_filename]);
+            $user->picture = $new_filename;
+            $user->save();
             return response()->json(['status' => 1, 'msg' => 'Hình ảnh đại diện của bạn đã được thay đổi thành công.']);
         } else {
             return response()->json(['status' => 0, 'msg' => 'Đã có lỗi xảy ra, vui lòng thử lại sau.']);
