@@ -47,6 +47,9 @@ class RegisterController extends Controller
             'password' => Hash::make($request->password),
         ]);
         if ($result) {
+            //Send Email verify account.
+
+
             session()->flash('success', 'Bạn đã đăng ký tài khoản thành công');
             return redirect()->route('admin.login');
         } else {
