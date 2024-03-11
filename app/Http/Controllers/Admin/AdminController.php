@@ -4,10 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 
 
+use constDefaults;
 use App\Models\User;
+use App\Rules\Blank;
+use App\Rules\Vietnamese;
 use App\Helpers\ChromePhp;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Rules\StrongPassword;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -16,7 +20,6 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Validator;
-use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 class AdminController extends Controller
 {
@@ -26,7 +29,7 @@ class AdminController extends Controller
         //dd($fieldType);
         $request->validate(
             [
-                'login_id' => 'required|string|min:5',
+                'login_id' => ['required', 'string', 'min:5'],
                 'password' => 'required|string|min:6',
             ],
             [
@@ -208,9 +211,9 @@ class AdminController extends Controller
         $request->validate(
             [
                 'name' => ['required', 'string', 'min:5'],
-                'username' => ['required', 'string', 'min:5', 'unique:users'],
+                'username' => ['required', 'string', 'min:5', 'unique:users', new Vietnamese, new Blank],
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-                'password' => ['required', 'string', 'min:6'],
+                'password' => ['required', 'string', 'min:6', new Vietnamese, new Blank],
                 'password_confirmation' => ['required', 'same:password'],
             ],
             [
@@ -260,7 +263,7 @@ class AdminController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'string', 'min:5'],
-            'username' => ['required', 'string', 'min:5'],
+            'username' => ['required', 'string', 'min:5', new Vietnamese, new Blank],
         ], [
             'required' => ':attribute không được để trống',
             'string' => ':attribute phải là ký tự',
@@ -291,8 +294,8 @@ class AdminController extends Controller
     public function changePassword(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'current_password' => ['bail', 'required', 'string', 'min:6', 'current_password'],
-            'new_password' => ['required', 'string', 'min:6'],
+            'current_password' => ['bail', 'required', 'current_password'],
+            'new_password' => ['bail','required', 'string', 'min:6', new Vietnamese, new Blank, new StrongPassword],
             'confirm_new_password' => ['required', 'same:new_password', 'string'],
         ], [
             'required' => ':attribute không được để trống',
