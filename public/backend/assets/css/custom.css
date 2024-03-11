@@ -1,14 +1,14 @@
 @charset "UTF-8";
 /* vunx add more style */
-.light-style #toast-container>.toast-success,
-.light-style #toast-container>.toast-success .toast-message a,
-.light-style #toast-container>.toast-success .toast-message label {
+.light-style #toast-container > .toast-success,
+.light-style #toast-container > .toast-success .toast-message a,
+.light-style #toast-container > .toast-success .toast-message label {
     background-color: #7ccb73 !important;
     color: #dde9d7 !important;
 }
 
 .swal2-popup {
-    font-size: .87em;
+    font-size: 0.87em;
 }
 
 #template-customizer .template-customizer-open-btn {
@@ -22,20 +22,17 @@
     color: var(--bs-form-invalid-color);
 }
 
-
-.menu-inner .bx {
+/* .menu-inner .bx {
     flex-grow: 0;
     flex-shrink: 0;
     margin-right: 0.5rem;
     font-size: 1.25rem;
-}
+} */
 
 .form-control {
     border: var(--bs-border-width) solid #93bae1 !important;
 }
 
 .input-group-text {
-
     border: var(--bs-border-width) solid #93bae1 !important;
-
 }

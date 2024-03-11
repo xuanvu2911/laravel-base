@@ -31,7 +31,7 @@
     <link rel="stylesheet" href="/backend/assets/vendor/css/rtl/core.css" class="template-customizer-core-css" />
     <link rel="stylesheet" href="/backend/assets/vendor/css/rtl/theme-default.css"
         class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="/backend/assets/css/custom.css" />
+    <link rel="stylesheet" href="/backend/assets/css/demo.css" />
 
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="/backend/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
@@ -43,7 +43,7 @@
     <!-- Page CSS -->
     <link rel="stylesheet" href="/backend/assets/vendor/css/pages/card-analytics.css" />
     <link rel="stylesheet" href="/backend/assets/vendor/libs/toastr/toastr.css" />
-
+    <link rel="stylesheet" href="/backend/assets/css/custom.css" />
     <!-- Helpers -->
     <script src="/backend/assets/vendor/js/helpers.js"></script>
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
