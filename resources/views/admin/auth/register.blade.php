@@ -1,5 +1,9 @@
 @extends('auth.auth')
 
+@section('css')
+<link rel="stylesheet" href="/backend/assets/vendor/libs/spinkit/spinkit.css" />
+@endsection
+
 @section('content')
 <!-- Register -->
 <div class="d-flex col-12 col-lg-5 col-xl-4 align-items-center authentication-bg p-sm-5 p-4">
@@ -108,8 +112,8 @@
 
             <input class="btn btn-primary d-grid w-100 mb-3" type="submit" id="submitBtn" value="Đăng Ký">
             <!-- vunx - load spinner when submit form -->
-            {{-- <div class="mb-3" id="spinner" style="margin: auto; width: 10%;">
-            </div> --}}
+            <div class="mb-3" id="spinner" style="margin: auto; width: 10%;">
+            </div>
 
             {{-- <button class="btn btn-primary d-grid w-100" type="submit" id="submitBtn" value="Đăng Ký">Sign
                 up</button> --}}
@@ -146,14 +150,13 @@
 
 @section('js')
 <script>
-    //VUNX - LOAD SPINNER WHEN SUBMIT FORM
-        // $(document).ready(() => {
-        //     $('#registerForm').on('submit', function(e) {
-        //         var spinner =
-        //             '<div class="sk-wave sk-primary"> <div class = "sk-wave-rect"> </div> <div class = "sk-wave-rect"> </div> <div class = "sk-wave-rect"> </div> <div class = "sk-wave-rect"> </div> <div class = "sk-wave-rect"> </div> </div>'
-        //         $("#submitBtn").remove();
-        //         $("#spinner").append(spinner);
-        //     });
-        // });
+    $(document).ready(() => {
+            $('#registerForm').on('submit', function(e) {
+                var spinner =
+                    '<div class="sk-wave sk-primary"> <div class = "sk-wave-rect"> </div> <div class = "sk-wave-rect"> </div> <div class = "sk-wave-rect"> </div> <div class = "sk-wave-rect"> </div> <div class = "sk-wave-rect"> </div> </div>'
+                $("#submitBtn").remove();
+                $("#spinner").append(spinner);
+            });
+        });
 </script>
 @endsection

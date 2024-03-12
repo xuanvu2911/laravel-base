@@ -39,6 +39,7 @@
     <link rel="stylesheet" href="/backend/assets/vendor/libs/apex-charts/apex-charts.css" />
     <link rel="stylesheet" type="text/css" href="/backend/extra-assets/ijabo/ijabo.min.css" />
     <link rel="stylesheet" type="text/css" href="/backend/extra-assets/ijaboCropTool/ijaboCropTool.min.css" />
+    <link rel="stylesheet" href="/backend/assets/vendor/libs/spinkit/spinkit.css" />
 
     <!-- Page CSS -->
     <link rel="stylesheet" href="/backend/assets/vendor/css/pages/card-analytics.css" />

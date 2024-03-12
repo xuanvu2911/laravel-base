@@ -67,7 +67,7 @@ class ForgotPasswordController extends Controller
         $mailConfig = array(
             'mail_recipient_email' => $user->email,
             'mail_recipient_name' => $user->name,
-            'mail_subject' => '[Laravel-Base] Reset Password',
+            'mail_subject' => '[Laravel-Base] Thiết lập lại mật khẩu cho tài khoản '.$user->email,
             'mail_body' => $mail_body,
         );
 

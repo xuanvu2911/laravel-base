@@ -38,7 +38,7 @@
     <link rel="stylesheet" href="/backend/assets/vendor/libs/typeahead-js/typeahead.css" />
     <!-- Vendor -->
     <link rel="stylesheet" href="/backend/assets/vendor/libs/@form-validation/umd/styles/index.min.css" />
-
+    <link rel="stylesheet" href="/backend/assets/vendor/libs/spinkit/spinkit.css" />
     <!-- Page CSS -->
     <!-- Page -->
     <link rel="stylesheet" href="/backend/assets/vendor/css/pages/page-auth.css" />

@@ -29,7 +29,7 @@ class AdminController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'string', 'min:5'],
-            'username' => ['bail','required', 'string', 'min:5', new Vietnamese, new Blank],
+            'username' => ['bail','required', 'string','unique:users,username,'.Auth::user()->id, 'min:5', new Vietnamese, new Blank],
         ], [
             'required' => ':attribute không được để trống',
             'string' => ':attribute phải là ký tự',
@@ -95,7 +95,7 @@ class AdminController extends Controller
         $mailConfig = array(
             'mail_recipient_email' => $user->email,
             'mail_recipient_name' => $user->name,
-            'mail_subject' => '[Laravel-Base] Password Changed',
+            'mail_subject' => '[Laravel-Base] Thay đổi mật khẩu thành công',
             'mail_body' => $mail_body,
         );
         $result = sendEmail($mailConfig);

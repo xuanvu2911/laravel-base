@@ -17,9 +17,9 @@ class RegisterController extends Controller
         $request->validate(
             [
                 'name' => ['required', 'string', 'min:5'],
-                'username' => ['bail','required', 'string', 'min:5', 'unique:users', new Vietnamese, new Blank],
+                'username' => ['bail', 'required', 'string', 'min:5', 'unique:users', new Vietnamese, new Blank],
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-                'password' => ['bail','required', 'string', 'min:6', new Vietnamese, new Blank],
+                'password' => ['bail', 'required', 'string', 'min:6', new Vietnamese, new Blank],
                 'password_confirmation' => ['required', 'same:password'],
             ],
             [
@@ -39,19 +39,32 @@ class RegisterController extends Controller
             ]
         );
 
-        $result = User::create([
+        $user = User::firstOrCreate([
             'name' => $request->name,
             'email' => $request->email,
             'username' =>  $request->username,
             'group_id' => 1,
             'password' => Hash::make($request->password),
         ]);
-        if ($result) {
+        if ($user) {
             //Send Email verify account.
+            //Create mail content
+            $mail_body = view('email-templates.register', ['user' => $user, 'password' => $request->password])->render();
 
+            $mailConfig = array(
+                'mail_recipient_email' => $user->email,
+                'mail_recipient_name' => $user->name,
+                'mail_subject' => '[Laravel-Base] Đăng ký tài khoản thành công',
+                'mail_body' => $mail_body,
+            );
 
-            session()->flash('success', 'Bạn đã đăng ký tài khoản thành công');
-            return redirect()->route('admin.login');
+            if (sendEmail($mailConfig)) {
+                session()->flash('success', 'Bạn đã đăng ký tài khoản thành công');
+                return redirect()->route('admin.login');
+            } else {
+                session()->flash('fail', 'Đã có lỗi xảy ra, xin thử lại sau.');
+                return redirect()->route('admin.register');
+            }
         } else {
             session()->flash('fail', 'Đã có lổi xãy ra, vui lòng thử lại sau.');
             return redirect()->route('admin.register');
